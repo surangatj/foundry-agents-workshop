@@ -371,12 +371,12 @@ def lab_page(i: int, lab: dict) -> str:
 
 # --------------------------------------------------------------------------- home
 AGENDA = [
-    ("09:00", "04:30", "Welcome, scenario, open your Codespace (Lab 0)", "Suranga"),
-    ("09:10", "04:40", "Theory · Agent Service, Agent Framework, A2A, Foundry Tools & IQ", "Suranga"),
-    ("10:00", "05:30", "Theory · Multi-agent orchestration, evaluations, improvement loop, fine-tuning & distillation, governance", "Suranga"),
-    ("11:00", "06:30", "Break", ""),
-    ("11:15", "06:45", "Hands-on · Labs 1–6 (core) and 7–8 (stretch)", "Damika & Rusiru"),
-    ("13:15", "08:45", "Show & tell · 2–3 teams demo their Copilot · wrap-up", "All"),
+    ("09:00", "Welcome, scenario, open your Codespace (Lab 0)", "Suranga"),
+    ("09:10", "Theory · Agent Service, Agent Framework, A2A, Foundry Tools & IQ", "Suranga"),
+    ("10:00", "Theory · Multi-agent orchestration, evaluations, improvement loop, fine-tuning & distillation, governance", "Suranga"),
+    ("11:00", "Break", ""),
+    ("11:15", "Hands-on · Labs 1–6 (core) and 7–8 (stretch)", "Damika & Rusiru"),
+    ("13:15", "Show & tell · 2–3 teams demo their Copilot · wrap-up", "All"),
 ]
 
 ARCH_SVG = """<svg viewBox="0 0 900 330" role="img" aria-label="Dialog Care Copilot architecture" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif" font-size="13">
@@ -401,7 +401,7 @@ ARCH_SVG = """<svg viewBox="0 0 900 330" role="img" aria-label="Dialog Care Copi
 
 
 def home() -> str:
-    rows = "".join(f"<tr><td>{a}</td><td>{b}</td><td>{c}</td><td>{d}</td></tr>" for a, b, c, d in AGENDA)
+    rows = "".join(f"<tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>" for a, b, c in AGENDA)
     cards = "".join(
         f'<a class="card {lab["kind"]}" href="pages/{lab["slug"]}.html"><span class="t">⏱ {lab["minutes"]} min</span>'
         f'<div class="k">Lab {lab["n"]} · {"core" if lab["kind"] == "core" else "stretch"}</div>'
@@ -422,7 +422,7 @@ Gulf — and gets measurably better through evaluation.</p>
 {note("tip", "Pace:", "Labs 0–6 are the core path (≈2 hours). Fast? Continue with 7–8. Behind? The finished code is in <code>labs/</code> — run it and keep going.")}
 
 <h2 class="sec">Agenda</h2>
-<div class="tablewrap"><table class="agenda"><tr><th>Sri Lanka</th><th>Sweden</th><th>Session</th><th>Lead</th></tr>{rows}</table></div>
+<div class="tablewrap"><table class="agenda"><tr><th>Time</th><th>Session</th><th>Lead</th></tr>{rows}</table></div>
 
 <h2 class="sec">People</h2>
 <div class="cards">
