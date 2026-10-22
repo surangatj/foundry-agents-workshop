@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prerequisites</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body>
+<header class="top"><div class="in"><a class="back" href="../home.html">← Workshop home</a>
+<div style="margin-top:10px"><span class="brand"><span class="d">Dialog</span><span class="x">×</span><span class="f">Microsoft Foundry</span><span class="by">· delivered by hONE</span></span></div>
+<h1>Prerequisites</h1><p>Please complete these before Monday morning.</p><div class="chips"></div></div></header>
+<main class="wrap">
+<ol class="steps">
+<li><h3>Access to a Microsoft Foundry project with a model</h3>
+<p>Either access to a Foundry project that already has a chat model deployed (recommended <code>gpt-5.4-mini</code>),
+or permission to deploy one yourself. The workshop uses the <b>Southeast Asia</b> region.</p>
+<p>Check: open <a href="https://ai.azure.com">ai.azure.com</a> → your project → copy the <b>project endpoint</b> from
+Overview and the <b>deployment name</b> from Models → say “Ayubowan!” in the Playground. You need at least the
+<b>Foundry User</b> role.</p></li>
+<li><h3>A GitHub account</h3><p>Personal accounts are fine. Codespaces includes free monthly hours — the workshop uses about 10.</p></li>
+<li><h3>A laptop with Chrome or Edge</h3><p>Nothing to install. Optional local alternative: VS Code, Python 3.13, Git, Azure CLI.</p></li>
+<li><h3>Test sign-in from a Codespace (5 minutes — important)</h3>
+<div class="ctas"><a class="cta" href="https://codespaces.new/surangatj/foundry-agents-workshop?quickstart=1">Open in Codespaces ↗</a></div>
+<div class="code"><pre><code>az login --use-device-code</code></pre></div>
+<p>If your Dialog sign-in is blocked, reply to the invitation before Monday so we can arrange a fallback.</p></li>
+</ol>
+<h2 class="sec">Nice to have — enables the advanced labs</h2>
+<div class="tablewrap"><table><tr><th>Feature</th><th>Lab</th><th>Needed in the project</th></tr>
+<tr><td>Application Insights connected</td><td>5 · tracing</td><td>Project → Tracing → connect</td></tr>
+<tr><td>Azure AI Search connected</td><td>2 · Foundry IQ</td><td>Search service (Basic+) connected to the project</td></tr>
+<tr><td>Fine-tuning permission</td><td>7 · distillation</td><td><code>gpt-4.1-mini</code> with Global Training</td></tr></table></div>
+<div class="stepnav"><a href="../home.html">← Workshop home<span>Agenda and labs</span></a>
+<a class="next" href="lab0.html">Lab 0 →<span>Set up your environment</span></a></div></main>
+<footer>Dialog × Microsoft Foundry agents workshop · delivered by hONE · all customer data and tariffs are fictional sample data ·
+<a href="https://github.com/surangatj/foundry-agents-workshop">source on GitHub</a></footer>
+<script src="../assets/site.js"></script>
+</body></html>

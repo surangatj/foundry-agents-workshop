@@ -1,0 +1,11 @@
+{
+  "_note": "Fictional outages for the hONE x Dialog Foundry workshop.",
+  "outages": [
+    {"id": "OUT-2026-1041", "district": "Kandy", "area": "Peradeniya, Katugastota", "service": "mobile_data",
+     "cause": "Fibre backhaul cut after landslide", "started": "2026-10-26T06:10:00+05:30",
+     "eta": "2026-10-26T16:00:00+05:30"},
+    {"id": "OUT-2026-1042", "district": "Jaffna", "area": "Nallur", "service": "fibre",
+     "cause": "Planned maintenance", "started": "2026-10-26T01:00:00+05:30",
+     "eta": "2026-10-26T12:00:00+05:30"}
+  ]
+}

@@ -1,0 +1,12 @@
+{"query": "I'm going to Singapore for 5 days. Which roaming pass should I buy?", "expected": "RM-ASIA-7"}
+{"query": "I work in Qatar and want cheap calls home to Sri Lanka every month. What do you recommend?", "expected": "RM-ME-WORKER"}
+{"query": "Going to Chennai for 3 days for a wedding. Best data option?", "expected": "RM-SA-3"}
+{"query": "How long after the due date before my postpaid outgoing calls are barred?", "expected": "14 days"}
+{"query": "What is the late payment fee on a postpaid bill?", "expected": "150"}
+{"query": "Can you replace my lost SIM over chat? I'm in Kandy.", "expected": "NIC"}
+{"query": "I deleted my eSIM by mistake. What do I do and is there a fee?", "expected": "200"}
+{"query": "මම ඉන්දියාවට දවස් 7ක් යනවා. හොඳම roaming pass එක මොකක්ද?", "expected": "RM-SA-7"}
+{"query": "நான் மாலத்தீவுக்கு 3 நாள் போகிறேன். எந்த roaming pass சிறந்தது?", "expected": "RM-SA-3"}
+{"query": "What is the cheapest monthly prepaid data package with night data?", "expected": "PRE-D1299"}
+{"query": "Can a billing agent approve a LKR 3,500 refund straight away?", "expected": "BILLING_ESCALATION"}
+{"query": "Machan, my roaming data stopped in Bangkok and I got an SMS. Why?", "expected": "25,000"}

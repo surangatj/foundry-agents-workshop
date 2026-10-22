@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+data/distill/
+.DS_Store
+# MCT courseware is licensed — never commit it
+slides/mct/

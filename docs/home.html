@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dialog × Microsoft Foundry Agents Workshop</title><link rel="stylesheet" href="assets/site.css"></head>
+<body>
+<header class="top"><div class="in"><a class="back" href="home.html">← Workshop home</a>
+<div style="margin-top:10px"><span class="brand"><span class="d">Dialog</span><span class="x">×</span><span class="f">Microsoft Foundry</span><span class="by">· delivered by hONE</span></span></div>
+<h1>Build, evaluate and govern AI agents with Microsoft Foundry</h1><p>Monday 26 October 2026 · 09:00–13:30 Sri Lanka time · Microsoft office Colombo + online</p><div class="chips"><span class="chip">Microsoft Agent Framework</span><span class="chip">Foundry Agent Service</span><span class="chip">A2A</span><span class="chip">Foundry IQ</span><span class="chip">Evaluations</span><span class="chip">Distillation</span><span class="chip">Governance</span></div></div></header>
+<main class="wrap">
+<div class="ctas"><a class="cta" href="https://codespaces.new/surangatj/foundry-agents-workshop?quickstart=1">Open in Codespaces ↗</a>
+<a class="cta alt" href="pages/prerequisites.html">Prerequisites</a>
+<a class="cta alt" href="pages/concepts.html">Concept guide</a></div>
+
+<h2 class="sec">The scenario — Dialog Care Copilot</h2>
+<p>You build a customer-care agent for a Sri Lankan telco that answers in English, Sinhala and Tamil, checks
+outages by district, explains bills in LKR, recommends roaming passes for Singapore, India, the Maldives and the
+Gulf — and gets measurably better through evaluation.</p>
+<figure class="diagram"><svg viewBox="0 0 900 330" role="img" aria-label="Dialog Care Copilot architecture" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif" font-size="13">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker></defs>
+<g fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--muted)">
+<path d="M120 165 H178" marker-end="url(#a)"/><path d="M300 165 C340 165 340 70 378 70" marker-end="url(#a)"/>
+<path d="M300 165 H378" marker-end="url(#a)"/><path d="M300 165 C340 165 340 260 378 260" marker-end="url(#a)"/>
+<path d="M520 70 H598" marker-end="url(#a)"/><path d="M520 165 H598" marker-end="url(#a)"/><path d="M520 260 H598" marker-end="url(#a)"/>
+</g>
+<g><rect x="20" y="140" width="100" height="50" rx="10" fill="var(--panel)" stroke="var(--border)"/><text x="70" y="162" text-anchor="middle" fill="var(--ink)">Customer</text><text x="70" y="178" text-anchor="middle" fill="var(--muted)" font-size="11">EN · සිං · தமிழ்</text></g>
+<g><rect x="180" y="135" width="120" height="60" rx="10" fill="var(--dialog)"/><text x="240" y="161" text-anchor="middle" fill="#fff" font-weight="600">Triage agent</text><text x="240" y="178" text-anchor="middle" fill="#fff" font-size="11">Lab 1 · Lab 3</text></g>
+<g fill="var(--foundry)"><rect x="380" y="45" width="140" height="50" rx="10"/><rect x="380" y="140" width="140" height="50" rx="10"/><rect x="380" y="235" width="140" height="50" rx="10"/></g>
+<g fill="#fff" text-anchor="middle" font-weight="600"><text x="450" y="75">Billing agent</text><text x="450" y="170">Network agent</text><text x="450" y="258">Roaming agent</text></g>
+<text x="450" y="275" text-anchor="middle" fill="#fff" font-size="11">served over A2A · Lab 4</text>
+<g fill="var(--card)" stroke="var(--border)"><rect x="600" y="45" width="280" height="50" rx="10"/><rect x="600" y="140" width="280" height="50" rx="10"/><rect x="600" y="235" width="280" height="50" rx="10"/></g>
+<g fill="var(--ink)"><text x="614" y="66">Tools: verify · bill · credit (approval)</text><text x="614" y="84" fill="var(--muted)" font-size="11">Function tools · Lab 1 · Lab 8</text>
+<text x="614" y="161">Tools: outage check · tickets</text><text x="614" y="179" fill="var(--muted)" font-size="11">Least-privilege tools · Lab 3</text>
+<text x="614" y="256">Knowledge: Foundry IQ knowledge base</text><text x="614" y="274" fill="var(--muted)" font-size="11">Agentic retrieval over policy docs · Lab 2</text></g>
+<rect x="20" y="300" width="860" height="26" rx="8" fill="var(--foundry-soft)"/>
+<text x="450" y="318" text-anchor="middle" fill="var(--ink)" font-size="12">Across everything: traces → evaluations → improvement loop (Labs 5–6) · distillation (Lab 7) · guardrails & Control Plane (Lab 8)</text>
+</svg><figcaption>What you will have built by the end of the labs.</figcaption></figure>
+
+<h2 class="sec">Hands-on labs</h2>
+<div class="cards"><a class="card core" href="pages/lab0.html"><span class="t">⏱ 10 min</span><div class="k">Lab 0 · core</div><h3>Set up your environment</h3><p>Setup</p></a><a class="card core" href="pages/lab1.html"><span class="t">⏱ 20 min</span><div class="k">Lab 1 · core</div><h3>Your first agent</h3><p>Foundry Agent Service · Microsoft Agent Framework · Foundry Tools</p></a><a class="card core" href="pages/lab2.html"><span class="t">⏱ 20 min</span><div class="k">Lab 2 · core</div><h3>Ground it with Foundry IQ</h3><p>Foundry Tools · Foundry IQ · RAG</p></a><a class="card core" href="pages/lab3.html"><span class="t">⏱ 25 min</span><div class="k">Lab 3 · core</div><h3>Multi-agent workflow</h3><p>Multi-agent · Orchestration · Handoff</p></a><a class="card core" href="pages/lab4.html"><span class="t">⏱ 20 min</span><div class="k">Lab 4 · core</div><h3>Agent-to-Agent (A2A)</h3><p>A2A protocol · Interoperability</p></a><a class="card core" href="pages/lab5.html"><span class="t">⏱ 25 min</span><div class="k">Lab 5 · core</div><h3>Observe and evaluate</h3><p>Observability · Tracing · Evaluations</p></a><a class="card core" href="pages/lab6.html"><span class="t">⏱ 20 min</span><div class="k">Lab 6 · core</div><h3>The improvement loop</h3><p>Continuous improvement · Agent versions · Evaluations</p></a><a class="card stretch" href="pages/lab7.html"><span class="t">⏱ 15 min</span><div class="k">Lab 7 · stretch</div><h3>Distillation</h3><p>Fine-tuning · Distillation</p></a><a class="card stretch" href="pages/lab8.html"><span class="t">⏱ 15 min</span><div class="k">Lab 8 · stretch</div><h3>Governance and guardrails</h3><p>Governance · Guardrails · Human-in-the-loop</p></a></div>
+<div class="note tip"><b>Pace:</b> Labs 0–6 are the core path (≈2 hours). Fast? Continue with 7–8. Behind? The finished code is in <code>labs/</code> — run it and keep going.</div>
+
+<h2 class="sec">Agenda</h2>
+<div class="tablewrap"><table class="agenda"><tr><th>Sri Lanka</th><th>Sweden</th><th>Session</th><th>Lead</th></tr><tr><td>09:00</td><td>04:30</td><td>Welcome, scenario, open your Codespace (Lab 0)</td><td>Suranga</td></tr><tr><td>09:10</td><td>04:40</td><td>Theory · Agent Service, Agent Framework, A2A, Foundry Tools & IQ</td><td>Suranga</td></tr><tr><td>10:00</td><td>05:30</td><td>Theory · Multi-agent orchestration, evaluations, improvement loop, fine-tuning & distillation, governance</td><td>Suranga</td></tr><tr><td>11:00</td><td>06:30</td><td>Break</td><td></td></tr><tr><td>11:15</td><td>06:45</td><td>Hands-on · Labs 1–6 (core) and 7–8 (stretch)</td><td>Damika & Rusiru</td></tr><tr><td>13:15</td><td>08:45</td><td>Show & tell · 2–3 teams demo their Copilot · wrap-up</td><td>All</td></tr></table></div>
+
+<h2 class="sec">People</h2>
+<div class="cards">
+<div class="card"><div class="k">Theory</div><h3>Suranga Nanayakkara</h3><p>Consultant – Data &amp; AI · Microsoft Certified Trainer</p></div>
+<div class="card"><div class="k">Hands-on</div><h3>Damika Saputhanthri</h3><p>Data &amp; AI Engineer, ICT &amp; Digital Solutions</p></div>
+<div class="card"><div class="k">Hands-on</div><h3>Rusiru Chathushanka</h3><p>Associate Tech Lead</p></div>
+</div>
+
+<h2 class="sec">Contributing</h2>
+<p>Found a fix or improvement during the labs? Open a pull request on <a href="https://github.com/surangatj/foundry-agents-workshop">the repository</a>.</p>
+</main>
+<footer>Dialog × Microsoft Foundry agents workshop · delivered by hONE · all customer data and tariffs are fictional sample data ·
+<a href="https://github.com/surangatj/foundry-agents-workshop">source on GitHub</a></footer>
+<script src="assets/site.js"></script>
+</body></html>

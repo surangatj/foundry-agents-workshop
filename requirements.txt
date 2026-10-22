@@ -1,0 +1,19 @@
+# Pinned 22 Oct 2026 — tested together. Agent Framework ships weekly; don't upgrade on the day.
+agent-framework-core==1.23.0
+agent-framework-foundry==1.15.0
+agent-framework-orchestrations==1.4.0
+agent-framework-a2a==1.0.0b261022
+agent-framework-hosting==1.0.0a261015
+agent-framework-hosting-a2a==1.0.0a261015
+agent-framework-devui==1.0.0b261022
+azure-ai-projects==2.7.0          # agent-framework-foundry 1.15 requires <2.8
+azure-ai-evaluation==1.18.9
+azure-identity==1.26.0
+azure-monitor-opentelemetry==1.8.11
+a2a-sdk==1.2.3
+openai==3.36.1
+httpx==0.28.1
+uvicorn==0.54.0
+starlette==1.9.0
+python-dotenv==1.2.4
+sse-starlette==3.5.0             # needed by the A2A server

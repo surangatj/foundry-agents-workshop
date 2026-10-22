@@ -1,0 +1,79 @@
+{
+  "_note": "Fictional customers for the hONE x Dialog Foundry workshop. Not real people or numbers.",
+  "customers": [
+    {
+      "mobile": "0771234501",
+      "first_name": "Nimal",
+      "nic_last4": "4521",
+      "district": "Colombo",
+      "connection": "postpaid",
+      "plan": "POST-1690",
+      "language": "en",
+      "bills": [
+        {"month": "2026-08", "amount_lkr": 1690, "status": "paid"},
+        {"month": "2026-09", "amount_lkr": 4215, "status": "unpaid", "due": "2026-09-21",
+         "line_items": [
+           {"item": "Monthly rental Blaster 1690", "lkr": 1690},
+           {"item": "Roaming data pay-as-you-go (India)", "lkr": 2160},
+           {"item": "VAS: Cricket Live Alerts subscription", "lkr": 215},
+           {"item": "Late payment fee", "lkr": 150}
+         ]}
+      ],
+      "vas": ["Cricket Live Alerts"]
+    },
+    {
+      "mobile": "0772345602",
+      "first_name": "Tharushi",
+      "nic_last4": "7788",
+      "district": "Kandy",
+      "connection": "prepaid",
+      "plan": "PRE-D1299",
+      "balance_lkr": 85,
+      "data_left_gb": 0.4,
+      "package_expiry": "2026-10-28",
+      "language": "si"
+    },
+    {
+      "mobile": "0773456703",
+      "first_name": "Kumaran",
+      "nic_last4": "3090",
+      "district": "Jaffna",
+      "connection": "postpaid",
+      "plan": "POST-2990",
+      "language": "ta",
+      "bills": [
+        {"month": "2026-09", "amount_lkr": 2990, "status": "paid"}
+      ],
+      "vas": []
+    },
+    {
+      "mobile": "0774567804",
+      "first_name": "Ayesha",
+      "nic_last4": "1123",
+      "district": "Galle",
+      "connection": "postpaid",
+      "plan": "POST-FAM",
+      "language": "en",
+      "bills": [
+        {"month": "2026-09", "amount_lkr": 6870, "status": "unpaid", "due": "2026-09-21",
+         "line_items": [
+           {"item": "Monthly rental Family Share 3990", "lkr": 3990},
+           {"item": "Roaming pay-as-you-go (Singapore)", "lkr": 2880}
+         ]}
+      ],
+      "vas": []
+    },
+    {
+      "mobile": "0775678905",
+      "first_name": "Ruwan",
+      "nic_last4": "6402",
+      "district": "Kurunegala",
+      "connection": "prepaid",
+      "plan": "PRE-D549",
+      "balance_lkr": 1200,
+      "data_left_gb": 3.1,
+      "package_expiry": "2026-10-24",
+      "language": "en"
+    }
+  ]
+}
