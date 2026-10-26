@@ -72,7 +72,7 @@ def main() -> None:
         random.shuffle(rows)
         cut = max(10, int(len(rows) * 0.8))
         for name, part in (("train", rows[:cut]), ("valid", rows[cut:])):
-            (out_dir / f"{name}.jsonl").write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in part) + "\n")
+            (out_dir / f"{name}.jsonl").write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in part) + "\n", encoding="utf-8")
         print(f"\n3️⃣  Wrote {cut} training and {len(rows) - cut} validation examples to data/distill/")
 
         if "--submit" not in sys.argv:

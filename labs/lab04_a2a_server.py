@@ -9,6 +9,7 @@ Check the card:    curl http://localhost:9999/.well-known/agent-card.json
 
 import asyncio
 import logging
+import os
 import uuid
 from typing import Any
 
@@ -20,7 +21,7 @@ from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.routes import create_agent_card_routes, create_jsonrpc_routes
 from a2a.server.tasks import InMemoryTaskStore, TaskUpdater
 from a2a.types import AgentCapabilities, AgentInterface, Part, TaskState
-from agent_framework import Agent
+from agent_framework import Agent, AgentResponseUpdate
 from agent_framework_hosting import AgentState
 from agent_framework_hosting_a2a import AgentA2AAdapter
 from starlette.applications import Starlette
@@ -30,6 +31,15 @@ from labs.lab03_multi_agent_handoff import ROAMING_FACTS
 
 PORT = 9999
 logger = logging.getLogger(__name__)
+
+
+def public_url() -> str:
+    """Advertise a reachable URL when using Codespaces or a configured tunnel."""
+    codespace = os.getenv("CODESPACE_NAME", "")
+    domain = os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN", "")
+    if codespace and domain:
+        return f"https://{codespace}-{PORT}.{domain}/"
+    return f"http://localhost:{PORT}/"
 
 
 class RoamingExecutor(AgentExecutor):
@@ -58,12 +68,21 @@ class RoamingExecutor(AgentExecutor):
             session = await self.adapter.state.get_or_create_session(session_id)
             stream = agent.run(run["messages"], session=session, options=run["options"], stream=True)
 
-            artifact_id = uuid.uuid4().hex
+            artifacts: dict[tuple, str] = {}
             sent = False
             async for update in stream:
-                if parts := self.adapter.a2a_from_run(update):
-                    await updater.add_artifact(parts=parts, artifact_id=artifact_id, append=True if sent else None)
-                    sent = True
+                for index, content in enumerate(update.contents):
+                    # Keep each logical content item in its own artifact. A final
+                    # text snapshot replaces the deltas for that item.
+                    raw = content.raw_representation
+                    key = (update.message_id, getattr(raw, "item_id", None),
+                           getattr(raw, "content_index", index), content.type)
+                    part_update = AgentResponseUpdate(role=update.role, contents=[content])
+                    if parts := self.adapter.a2a_from_run(part_update):
+                        append = key in artifacts and content.merge_mode != "replace"
+                        artifact_id = artifacts.setdefault(key, uuid.uuid4().hex)
+                        await updater.add_artifact(parts=parts, artifact_id=artifact_id, append=append)
+                        sent = True
             final = await stream.get_final_response()
             if not sent and (parts := self.adapter.a2a_from_run(final)):
                 await updater.update_status(state=TaskState.TASK_STATE_WORKING, message=updater.new_agent_message(parts))
@@ -87,7 +106,7 @@ def main() -> None:
         AgentState(agent),
         version="1.0.0",
         capabilities=AgentCapabilities(streaming=True),
-        supported_interfaces=[AgentInterface(url=f"http://localhost:{PORT}/", protocol_binding="JSONRPC")],
+        supported_interfaces=[AgentInterface(url=public_url(), protocol_binding="JSONRPC")],
     )
     card = asyncio.run(adapter.get_card())
     handler = DefaultRequestHandler(agent_executor=RoamingExecutor(adapter), task_store=InMemoryTaskStore(), agent_card=card)

@@ -25,7 +25,7 @@ def project_client() -> AIProjectClient:
 
 
 def knowledge_text() -> str:
-    return "\n\n".join(p.read_text() for p in sorted(KNOWLEDGE_DIR.glob("*.md")))
+    return "\n\n".join(p.read_text(encoding="utf-8") for p in sorted(KNOWLEDGE_DIR.glob("*.md")))
 
 
 def publish_agent(project: AIProjectClient, instructions: str):
@@ -72,8 +72,12 @@ def create_eval(openai_client, name: str):
     )
 
 
-def run_eval(openai_client, eval_id: str, agent, label: str):
-    rows = [json.loads(line) for line in (DATA_DIR / "eval" / "care_questions.jsonl").read_text().splitlines() if line]
+def run_eval(openai_client, eval_id: str, agent, label: str, *, timeout_seconds: float = 1200):
+    if timeout_seconds <= 0:
+        raise ValueError("Evaluation timeout must be positive.")
+    rows = [json.loads(line) for line in (DATA_DIR / "eval" / "care_questions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    if not rows:
+        raise ValueError("The evaluation dataset is empty.")
     data_source = TargetCompletionEvalRunDataSource(
         type="azure_ai_target_completions",
         source={"type": "file_content", "content": [{"item": row} for row in rows]},
@@ -83,15 +87,26 @@ def run_eval(openai_client, eval_id: str, agent, label: str):
     )
     run = openai_client.evals.runs.create(eval_id=eval_id, name=label, data_source=data_source)
     print(f"   ⏳ evaluation run '{label}' started — {len(rows)} test questions")
-    while run.status not in ("completed", "failed", "canceled"):
-        time.sleep(10)
+    deadline = time.monotonic() + timeout_seconds
+    while run.status not in ("completed", "failed", "canceled", "cancelled"):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError(
+                f"Evaluation {run.id} exceeded {timeout_seconds:g} seconds. "
+                "The cloud run may still be active; inspect or cancel it in Foundry."
+            )
+        time.sleep(min(10, remaining))
         run = openai_client.evals.runs.retrieve(run_id=run.id, eval_id=eval_id)
         print(f"      status: {run.status}")
+    if run.status != "completed":
+        raise RuntimeError(f"Evaluation {run.id} {run.status}: {getattr(run, 'error', None) or 'see Foundry for details'}")
     return run
 
 
 def summarise(openai_client, eval_id: str, run) -> dict[str, float]:
     """Pass-rate per evaluator, plus the failing questions."""
+    if run.status != "completed":
+        raise RuntimeError(f"Cannot summarise evaluation {run.id}: status is {run.status}.")
     passed: dict[str, list[bool]] = {}
     failures: list[str] = []
     for item in openai_client.evals.runs.output_items.list(run_id=run.id, eval_id=eval_id):
@@ -102,6 +117,8 @@ def summarise(openai_client, eval_id: str, run) -> dict[str, float]:
                 query = (item.datasource_item or {}).get("query", "")
                 failures.append(f"✗ {r.get('name')}: {query[:80]}")
     rates = {name: sum(v) / len(v) for name, v in passed.items() if v}
+    if not rates:
+        raise RuntimeError(f"Evaluation {run.id} completed without evaluator results; inspect the run in Foundry.")
     for name, rate in rates.items():
         print(f"   {name:<22} {rate:6.0%}  {'█' * round(rate * 20)}")
     if failures:

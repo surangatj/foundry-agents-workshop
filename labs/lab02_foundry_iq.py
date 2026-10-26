@@ -16,7 +16,6 @@ Run:  python -m labs.lab02_foundry_iq            (Part A)
 """
 
 import asyncio
-import contextlib
 import os
 import sys
 
@@ -41,18 +40,37 @@ QUESTIONS = [
 
 async def build_vector_store(client) -> tuple[str, list[str]]:
     oai = client.client  # the project's OpenAI-compatible client
+    paths = sorted(KNOWLEDGE_DIR.glob("*.md"))
+    if not paths:
+        raise ValueError(f"No knowledge documents found in {KNOWLEDGE_DIR}.")
     store = await oai.vector_stores.create(
         name=agent_name("dialog-knowledge"), expires_after={"anchor": "last_active_at", "days": 2}
     )
     file_ids = []
-    for path in sorted(KNOWLEDGE_DIR.glob("*.md")):
-        uploaded = await oai.files.create(file=(path.name, path.read_bytes()), purpose="assistants")
-        result = await oai.vector_stores.files.create_and_poll(vector_store_id=store.id, file_id=uploaded.id)
-        if result.last_error is not None:
-            raise RuntimeError(f"{path.name}: {result.last_error.message}")
-        file_ids.append(uploaded.id)
-        print(f"   📄 indexed {path.name}")
+    try:
+        for path in paths:
+            uploaded = await oai.files.create(file=(path.name, path.read_bytes()), purpose="assistants")
+            file_ids.append(uploaded.id)  # Track the upload before indexing can fail.
+            result = await oai.vector_stores.files.create_and_poll(vector_store_id=store.id, file_id=uploaded.id)
+            if result.status != "completed" or result.last_error is not None:
+                raise RuntimeError(f"{path.name}: {result.last_error or result.status}")
+            print(f"   📄 indexed {path.name}")
+    except BaseException:
+        await delete_vector_store(client, store.id, file_ids)
+        raise
     return store.id, file_ids
+
+
+async def delete_vector_store(client, store_id: str, file_ids: list[str]) -> None:
+    try:
+        await client.client.vector_stores.delete(vector_store_id=store_id)
+    except Exception as exc:
+        print(f"Cleanup warning: could not delete vector store {store_id}: {exc}")
+    for fid in file_ids:
+        try:
+            await client.client.files.delete(file_id=fid)
+        except Exception as exc:
+            print(f"Cleanup warning: could not delete file {fid}: {exc}")
 
 
 async def main() -> None:
@@ -74,17 +92,13 @@ async def main() -> None:
     else:
         print("Creating your vector store (≈30 s)…")
         store_id, file_ids = await build_vector_store(client)
-        knowledge_tool = client.get_file_search_tool(vector_store_ids=[store_id], max_num_results=5)
-
         async def cleanup() -> None:
-            with contextlib.suppress(Exception):
-                await client.client.vector_stores.delete(vector_store_id=store_id)
-            for fid in file_ids:
-                with contextlib.suppress(Exception):
-                    await client.client.files.delete(file_id=fid)
+            await delete_vector_store(client, store_id, file_ids)
 
-    agent = Agent(client=client, name="dialog-knowledge-agent", instructions=INSTRUCTIONS, tools=[knowledge_tool])
     try:
+        if "--iq" not in sys.argv:
+            knowledge_tool = client.get_file_search_tool(vector_store_ids=[store_id], max_num_results=5)
+        agent = Agent(client=client, name="dialog-knowledge-agent", instructions=INSTRUCTIONS, tools=[knowledge_tool])
         for question in QUESTIONS:
             print(f"\n👤 {question}")
             print(f"🤖 {await agent.run(question)}")

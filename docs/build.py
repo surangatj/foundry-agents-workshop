@@ -523,13 +523,13 @@ Overview and the <b>deployment name</b> from Models → say “Ayubowan!” in t
 
 def main() -> None:
     (OUT / "pages").mkdir(exist_ok=True)
-    (OUT / "index.html").write_text(landing())
-    (OUT / "home.html").write_text(home())
-    (OUT / "pages" / "concepts.html").write_text(concepts())
-    (OUT / "pages" / "prerequisites.html").write_text(prereqs())
+    (OUT / "index.html").write_text(landing(), encoding="utf-8")
+    (OUT / "home.html").write_text(home(), encoding="utf-8")
+    (OUT / "pages" / "concepts.html").write_text(concepts(), encoding="utf-8")
+    (OUT / "pages" / "prerequisites.html").write_text(prereqs(), encoding="utf-8")
     for i, lab in enumerate(LABS):
-        (OUT / "pages" / f"{lab['slug']}.html").write_text(lab_page(i, lab))
-    (OUT / ".nojekyll").write_text("")
+        (OUT / "pages" / f"{lab['slug']}.html").write_text(lab_page(i, lab), encoding="utf-8")
+    (OUT / ".nojekyll").write_text("", encoding="utf-8")
     print(f"Built {len(LABS) + 4} pages into {OUT}")
 
 

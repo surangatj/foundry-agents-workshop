@@ -22,10 +22,15 @@ from labs.common.dialog_tools import ALL_TOOLS
 
 
 async def main() -> None:
-    host = os.getenv("A2A_AGENT_HOST", "http://localhost:9999")
+    host = os.getenv("A2A_AGENT_HOST", "").strip().rstrip("/") or "http://localhost:9999"
 
     async with httpx.AsyncClient(timeout=60.0) as http:
         card = await A2ACardResolver(httpx_client=http, base_url=host).get_agent_card()
+    # The discovered card may advertise localhost behind a forwarded port.
+    # Route its JSON-RPC interface through the host the participant selected.
+    for interface in card.supported_interfaces:
+        if interface.protocol_binding == "JSONRPC":
+            interface.url = host + "/"
     print(f"🔎 Discovered: {card.name} — {card.description}")
 
     async with A2AAgent(name=card.name, description=card.description, agent_card=card, url=host) as roaming:

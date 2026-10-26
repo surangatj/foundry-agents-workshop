@@ -13,8 +13,8 @@ from pydantic import Field
 
 from .config import DATA_DIR
 
-_CUSTOMERS = {c["mobile"]: c for c in json.loads((DATA_DIR / "customers.json").read_text())["customers"]}
-_OUTAGES = json.loads((DATA_DIR / "outages.json").read_text())["outages"]
+_CUSTOMERS = {c["mobile"]: c for c in json.loads((DATA_DIR / "customers.json").read_text(encoding="utf-8"))["customers"]}
+_OUTAGES = json.loads((DATA_DIR / "outages.json").read_text(encoding="utf-8"))["outages"]
 _TICKETS: list[dict] = []
 
 
@@ -116,6 +116,8 @@ def apply_bill_credit(
     """Apply a credit adjustment to the customer's next bill (agent limit: LKR 2,000)."""
     if not _verified(mobile, nic_last4):
         return "VERIFICATION FAILED."
+    if isinstance(amount_lkr, bool) or not isinstance(amount_lkr, int) or amount_lkr <= 0:
+        return "REJECTED: credit amount must be a positive whole number of LKR."
     if amount_lkr > 2000:
         return "REJECTED: above the LKR 2,000 agent limit. Raise a BILLING_ESCALATION ticket instead."
     return json.dumps({"status": "credited", "amount_lkr": amount_lkr, "reason": reason,
