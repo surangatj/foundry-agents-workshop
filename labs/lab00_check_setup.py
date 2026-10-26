@@ -19,9 +19,22 @@ def check(label: str, ok: bool, hint: str = "") -> bool:
 async def main() -> None:
     print("Dialog Care Copilot — environment check\n")
     ok = check(f"Python {sys.version.split()[0]}", sys.version_info >= (3, 11), "Use Python 3.11–3.13.")
-    ok &= check("Azure CLI installed", shutil.which("az") is not None, "Install the Azure CLI (already in Codespaces).")
+    
+    az_path = shutil.which("az")
+    ok &= check(
+        "Azure CLI installed",
+        az_path is not None,
+        "Install the Azure CLI, then restart your terminal.",
+    )
 
-    signed_in = subprocess.run(["az", "account", "show", "-o", "none"], capture_output=True).returncode == 0
+    signed_in = (
+        az_path is not None
+        and subprocess.run(
+            [az_path, "account", "show", "-o", "none"],
+            capture_output=True,
+        ).returncode == 0
+    )
+    
     ok &= check("Signed in with az login", signed_in, "Run: az login --use-device-code")
 
     require("FOUNDRY_PROJECT_ENDPOINT")
