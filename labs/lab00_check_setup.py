@@ -51,7 +51,7 @@ async def main() -> None:
         reply = await agent.run("Say 'Ayubowan' and tell me which model you are.")
     except Exception as exc:  # noqa: BLE001 — show any auth/RBAC/network error plainly
         sys.exit(f"  ❌ Foundry call failed: {exc}\n     → Check the endpoint, the deployment name and your "
-                 "'Azure AI User' role on the project (ask Damika or Rusiru).")
+                f"'Azure AI User' role on the project (ask Damika or Rusiru).")
     print(f"  ✅ {reply.text}\n\nYou're ready for Lab 1 🎉")
 
 

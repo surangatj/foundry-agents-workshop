@@ -56,8 +56,9 @@ async def main() -> None:
         while question := input("You: ").strip():
             print("Copilot: ", end="", flush=True)
             async for chunk in agent.run(question, session=session, stream=True):
-                if chunk.text:
-                    print(chunk.text, end="", flush=True)
+                for content in chunk.contents:
+                    if content.type == "text" and content.merge_mode != "replace" and content.text:
+                        print(content.text, end="", flush=True)
             print("\n")
         return
 
@@ -65,8 +66,9 @@ async def main() -> None:
         print(f"\n👤 {question}\n🤖 ", end="", flush=True)
         # Step 5: stream=True yields updates as the model generates them
         async for chunk in agent.run(question, session=session, stream=True):
-            if chunk.text:
-                print(chunk.text, end="", flush=True)
+            for content in chunk.contents:
+                if content.type == "text" and content.merge_mode != "replace" and content.text:
+                    print(content.text, end="", flush=True)
         print()
 
     # 🧪 Try it: ask in Sinhala — "මගේ data ඉවර වෙලා. 0772345602, NIC 7788" — and check the reply language.
