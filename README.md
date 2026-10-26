@@ -17,7 +17,7 @@ You build **Dialog Care Copilot**, a customer-care agent for a Sri Lankan telco,
 | 7 | Distillation (stretch) | `python -m labs.lab07_distillation` |
 | 8 | Governance & guardrails (stretch) | `python -m labs.lab08_governance` |
 
-**Start here:** [PREREQUISITES.md](PREREQUISITES.md) → open in Codespaces → `az login --use-device-code` → Lab 0.
+**Start here:** [PREREQUISITES.md](PREREQUISITES.md) → open in Codespaces → install dependencies with `python -m pip install -r requirements.txt` → sign in with `az login --use-device-code` → run Lab 0 with `python -m labs.lab00_check_setup`.
 
 > All customers, packages and prices in `data/` are **fictional sample data** for training — not real Dialog tariffs.
 
