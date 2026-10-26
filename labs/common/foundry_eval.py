@@ -13,15 +13,9 @@ from azure.ai.projects.models import (
     TargetCompletionEvalRunDataSource,
     TestingCriterionAzureAIEvaluator,
 )
-from azure.identity import AzureCliCredential
-
-from .config import DATA_DIR, KNOWLEDGE_DIR, agent_name, require
+from .config import DATA_DIR, KNOWLEDGE_DIR, agent_name, project_client, require
 
 FAQ_AGENT = "faq-agent"
-
-
-def project_client() -> AIProjectClient:
-    return AIProjectClient(endpoint=require("FOUNDRY_PROJECT_ENDPOINT"), credential=AzureCliCredential())
 
 
 def knowledge_text() -> str:

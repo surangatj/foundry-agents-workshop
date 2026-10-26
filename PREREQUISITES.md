@@ -6,15 +6,26 @@
 Please complete these **before Monday morning**. Everything else (Python packages,
 Azure CLI, code) is pre-installed in the workshop's GitHub Codespace.
 
+**No local administrator access or Azure CLI?** Use the API key supplied by the
+facilitators. Set `FOUNDRY_PROJECT_ENDPOINT`, `FOUNDRY_MODEL`, `PARTICIPANT_ALIAS`
+and `FOUNDRY_API_KEY` in `.env`, then run `python -m labs.lab00_check_setup`.
+No Azure CLI installation or `az login` is needed in API-key mode. The resource
+must allow API-key authentication for the operations used by the labs.
+
 ## 1. Access to a Microsoft Foundry project with a model
 
 You need **one** of the following:
 
+- a shared project endpoint, model deployment name and resource API key supplied
+  by the facilitators (no personal Azure sign-in required), **or**
 - access to an existing Foundry project that already has a chat model deployed
   (recommended: `gpt-5.4-mini`, or `gpt-5-mini` / `gpt-4.1-mini`), **or**
 - permission to deploy a model yourself in a Foundry project.
 
-Check it now:
+For API-key access, use the endpoint, deployment name and key from the facilitators
+and validate them with Lab 0. Keep the key in `.env`; never commit or share that file.
+
+For personal Azure sign-in, check it now:
 
 1. Open <https://ai.azure.com> and sign in with your Dialog account.
 2. Open your project. On **Overview**, copy the **Project endpoint**
@@ -24,7 +35,7 @@ Check it now:
    The workshop's Foundry resources use the **Southeast Asia** Azure region.
 4. Open the **Playground**, type "Ayubowan!", and confirm you get a reply.
 
-You need at least the **Foundry User** role (formerly *Azure AI User*) on the project.
+For personal Azure sign-in, you need at least the **Foundry User** role (formerly *Azure AI User*) on the project.
 If step 4 fails, ask your Azure admin for that role.
 
 > Keep the **project endpoint** and **deployment name** handy — you will paste them into Lab 0.
@@ -39,9 +50,15 @@ If step 4 fails, ask your Azure admin for that role.
 
 - Chrome or Edge. Nothing needs to be installed locally.
 - **Optional (local alternative to Codespaces):** VS Code, Python 3.13, Git and
-  the Azure CLI.
+  the Azure CLI only if using personal Azure sign-in. API-key users do not need the CLI.
 
 ## 4. Test sign-in from a Codespace (5 minutes — important!)
+
+**API-key users:** skip device-code sign-in. Copy `.env.example` to `.env`, fill
+in the four values above and run Lab 0. Use Codespaces if installing Python
+packages on your work laptop is restricted.
+
+**Personal Azure sign-in users:**
 
 Dialog's sign-in policies can block the device-code login that Codespaces uses.
 Please test it before Monday:

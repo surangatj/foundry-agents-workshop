@@ -8,15 +8,19 @@
 <main class="wrap">
 <ol class="steps">
 <li><h3>Access to a Microsoft Foundry project with a model</h3>
+<p>API-key option: get the project endpoint, deployment name and resource key from the facilitators.
+Set <code>FOUNDRY_API_KEY</code> in <code>.env</code>; Azure CLI and personal Azure sign-in are not required.</p>
 <p>Either access to a Foundry project that already has a chat model deployed (recommended <code>gpt-5.4-mini</code>),
 or permission to deploy one yourself. The workshop uses the <b>Southeast Asia</b> region.</p>
 <p>Check: open <a href="https://ai.azure.com">ai.azure.com</a> → your project → copy the <b>project endpoint</b> from
 Overview and the <b>deployment name</b> from Models → say “Ayubowan!” in the Playground. You need at least the
 <b>Foundry User</b> role.</p></li>
 <li><h3>A GitHub account</h3><p>Personal accounts are fine. Codespaces includes free monthly hours — the workshop uses about 10.</p></li>
-<li><h3>A laptop with Chrome or Edge</h3><p>Nothing to install. Optional local alternative: VS Code, Python 3.13, Git, Azure CLI.</p></li>
+<li><h3>A laptop with Chrome or Edge</h3><p>Nothing to install with Codespaces. Optional local alternative: VS Code, Python 3.13 and Git. Azure CLI is needed only for personal Azure sign-in.</p></li>
 <li><h3>Test sign-in from a Codespace (5 minutes — important)</h3>
 <div class="ctas"><a class="cta" href="https://codespaces.new/surangatj/foundry-agents-workshop?quickstart=1">Open in Codespaces ↗</a></div>
+<p>API-key users: configure <code>.env</code> and run <code>python -m labs.lab00_check_setup</code>.
+Otherwise, test personal Azure sign-in:</p>
 <div class="code"><pre><code>az login --use-device-code</code></pre></div>
 <p>If your Dialog sign-in is blocked, reply to the invitation before Monday so we can arrange a fallback.</p></li>
 </ol>

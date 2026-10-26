@@ -17,7 +17,12 @@ You build **Dialog Care Copilot**, a customer-care agent for a Sri Lankan telco,
 | 7 | Distillation (stretch) | `python -m labs.lab07_distillation` |
 | 8 | Governance & guardrails (stretch) | `python -m labs.lab08_governance` |
 
-**Start here:** [PREREQUISITES.md](PREREQUISITES.md) → open in Codespaces → install dependencies with `python -m pip install -r requirements.txt` → sign in with `az login --use-device-code` → run Lab 0 with `python -m labs.lab00_check_setup`.
+**Start here:** [PREREQUISITES.md](PREREQUISITES.md) → open in Codespaces → install dependencies with `python -m pip install -r requirements.txt` → fill in `.env`, including `FOUNDRY_API_KEY` from the facilitators → run Lab 0 with `python -m labs.lab00_check_setup`.
+
+With `FOUNDRY_API_KEY` configured, Azure CLI and `az login` are not required.
+Use the resource key for the configured Foundry project; keep `.env` private.
+API-key access must be enabled on the resource and supported by the requested service operation.
+Leave the key empty to use the original `az login --use-device-code` flow instead.
 
 > All customers, packages and prices in `data/` are **fictional sample data** for training — not real Dialog tariffs.
 

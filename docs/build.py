@@ -49,25 +49,29 @@ LABS = [
         slug="lab0", n=0, title="Set up your environment", minutes=10, kind="core",
         topics=["Setup"],
         recap="Everything runs in a <b>GitHub Codespace</b> — VS Code in your browser with Python 3.13, the Azure CLI "
-              "and all packages preinstalled. You sign in with your Dialog account and point the code at the shared "
+              "and all packages preinstalled. Use the facilitator's API key or sign in with your Dialog account to access the shared "
               "Foundry project.",
-        goals=["Open the workshop in a Codespace", "Sign in to Azure", "Connect to the Foundry project and get a reply from the model"],
+        goals=["Open the workshop in a Codespace", "Configure an API key or Azure sign-in", "Connect to the Foundry project and get a reply from the model"],
         steps=[
             ("Open the Codespace",
              f'<p>Click the button. A browser VS Code opens and installs everything (about 2 minutes the first time).</p>'
              f'<div class="ctas"><a class="cta" href="{CODESPACE}">Open in GitHub Codespaces ↗</a></div>'
              f'<p>Prefer your own laptop? Clone the repo, create a Python 3.13 virtual environment and run '
              f'<code>pip install -r requirements.txt</code>.</p>'),
-            ("Sign in to Azure",
-             "<p>In the Codespace terminal (<b>Ctrl+`</b>):</p>" + code("az login --use-device-code") +
+            ("Choose authentication",
+             "<p>For API-key access, get the resource key from the facilitators and put it in "
+             "<code>FOUNDRY_API_KEY</code> in <code>.env</code>. Azure CLI and local administrator rights "
+             "are not required. Never share or commit the key.</p>"
+             "<p>Alternatively, leave the key empty and sign in in the terminal (<b>Ctrl+`</b>):</p>" + code("az login --use-device-code") +
              "<p>Open the link, enter the code, sign in with your <b>Dialog</b> account and pick the subscription that "
              "holds the Foundry project.</p>"),
             ("Fill in .env",
-             "<p>The Codespace created <code>.env</code> for you. Open it and set three values — find the first two in "
+             "<p>The Codespace created <code>.env</code> for you. Open it and set the values below — get them from the facilitators, or find the endpoint and model in "
              "the Foundry portal on your project's <b>Overview</b> page and <b>Models</b> page:</p>" +
              code("FOUNDRY_PROJECT_ENDPOINT=https://<resource>.services.ai.azure.com/api/projects/<project>\n"
                   "FOUNDRY_MODEL=gpt-5.4-mini\n"
-                  "PARTICIPANT_ALIAS=amila-a", ".env") +
+                  "PARTICIPANT_ALIAS=amila-a\n"
+                  "FOUNDRY_API_KEY=<resource key from facilitators; leave empty for Azure sign-in>", ".env") +
              note("tip", "Why an alias?", "About 60 people share one project. Your alias prefixes every agent you "
                   "create (<code>amila-a-faq-agent</code>) so nobody overwrites anyone else.")),
             ("Run the check",
@@ -76,8 +80,8 @@ LABS = [
         ],
         trouble=[
             ("az login says my sign-in was blocked",
-             "Dialog's conditional access may block device-code sign-in. Run the labs in VS Code on your laptop "
-             "instead (normal <code>az login</code> opens a browser), or ask Damika / Rusiru."),
+             "Use <code>FOUNDRY_API_KEY</code> from the facilitators in <code>.env</code> to skip Azure CLI sign-in. "
+             "Ask Damika / Rusiru for access to a resource that supports API-key authentication."),
             ("403 / PermissionDenied when calling the model",
              "You need the <b>Foundry User</b> role on the project. Ask the facilitators to add you."),
             ("DeploymentNotFound",
@@ -499,15 +503,19 @@ def prereqs() -> str:
     body = f"""
 <ol class="steps">
 <li><h3>Access to a Microsoft Foundry project with a model</h3>
+<p>API-key option: get the project endpoint, deployment name and resource key from the facilitators.
+Set <code>FOUNDRY_API_KEY</code> in <code>.env</code>; Azure CLI and personal Azure sign-in are not required.</p>
 <p>Either access to a Foundry project that already has a chat model deployed (recommended <code>gpt-5.4-mini</code>),
 or permission to deploy one yourself. The workshop uses the <b>Southeast Asia</b> region.</p>
 <p>Check: open <a href="https://ai.azure.com">ai.azure.com</a> → your project → copy the <b>project endpoint</b> from
 Overview and the <b>deployment name</b> from Models → say “Ayubowan!” in the Playground. You need at least the
 <b>Foundry User</b> role.</p></li>
 <li><h3>A GitHub account</h3><p>Personal accounts are fine. Codespaces includes free monthly hours — the workshop uses about 10.</p></li>
-<li><h3>A laptop with Chrome or Edge</h3><p>Nothing to install. Optional local alternative: VS Code, Python 3.13, Git, Azure CLI.</p></li>
+<li><h3>A laptop with Chrome or Edge</h3><p>Nothing to install with Codespaces. Optional local alternative: VS Code, Python 3.13 and Git. Azure CLI is needed only for personal Azure sign-in.</p></li>
 <li><h3>Test sign-in from a Codespace (5 minutes — important)</h3>
 <div class="ctas"><a class="cta" href="{CODESPACE}">Open in Codespaces ↗</a></div>
+<p>API-key users: configure <code>.env</code> and run <code>python -m labs.lab00_check_setup</code>.
+Otherwise, test personal Azure sign-in:</p>
 {code("az login --use-device-code")}
 <p>If your Dialog sign-in is blocked, reply to the invitation before Monday so we can arrange a fallback.</p></li>
 </ol>
